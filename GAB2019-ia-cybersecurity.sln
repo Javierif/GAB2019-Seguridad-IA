@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAB2019-ia-cybersecurity", "GAB2019-ia-cybersecurity\GAB2019-ia-cybersecurity.csproj", "{4266C284-04D9-46D9-A585-55FC421ECF5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GAB2019_ia_cybersecurity", "GAB2019-ia-cybersecurity\GAB2019_ia_cybersecurity.csproj", "{4266C284-04D9-46D9-A585-55FC421ECF5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<link rel="stylesheet" href="~/css/speaker.css" />
+
+<div class="main">
+    <div class="container">
+        <div class="col-sm-12 col-md-12 well" id="contentTerminator">
+            <div class='console-container'><span id='terminatorsTerminal'></span><div class='console-underscore' id='console'>&#95;</div></div>
+
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="middle">
+                <img src="~/images/destruction.gif" id="smile" alt="LOGO" />
+                <button class="btn btn-primary btn-lg" onclick="continuar()">Continuar</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<script>
+    consoleText(['No quedaban tartas, a si que hemos enviado a nuestro robot a comprar en el pueblo'], 'terminatorsTerminal'); 
+    function continuar() {
+        window.location.href = '/home/thirdlogin';
+    }
+</script>

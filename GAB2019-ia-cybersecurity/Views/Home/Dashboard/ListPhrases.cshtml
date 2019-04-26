@@ -1,0 +1,41 @@
+﻿<div class="row col-md-12 custyle">
+    <table class="table table-striped custab" id="listPhrases">
+        <thead>
+
+            <tr>
+                <th>Frase</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    function showPhrases(json) {
+        
+         let tableRef = document.getElementById("listPhrases").getElementsByTagName('tbody')[0];
+            var new_tbody = document.createElement('tbody');
+            tableRef.parentNode.replaceChild(new_tbody, tableRef)
+            json.forEach(phrase => {
+                let newRow = new_tbody.insertRow(-1);
+                let newCellPhrase = newRow.insertCell(0);
+
+
+                let newText = document.createTextNode(phrase.phrase);
+                newCellPhrase.appendChild(newText);
+            })
+        
+    }
+
+    function getPhrases() {
+        var request = new XMLHttpRequest();
+        request.open("GET", "/api/Speaker/GetVerificationPhrases", true);
+
+        request.onload = function () {
+            var json = JSON.parse(request.responseText);
+            showPhrases(json);
+            console.log("request respuesta", json);
+        };
+        request.send();
+    }
+
+</script>

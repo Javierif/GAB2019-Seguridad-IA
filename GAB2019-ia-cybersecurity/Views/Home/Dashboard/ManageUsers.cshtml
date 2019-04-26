@@ -1,0 +1,92 @@
+﻿<div class="row col-md-12 custyle">
+    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addUserModel">
+        Añadir Usuario
+    </button>
+
+    <div class="modal fade" id="addUserModel" tabindex="-1" role="dialog" aria-labelledby="addUserModel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="Nombre" id="inputName">
+                    <input type="password" placeholder="Contraseña" id="inputPassword">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addUser()">Añadir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped custab" id="listSpeakers">
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+
+
+    function showListUsers() {
+        console.log("AQUI ", listUsers)
+        let tableRef = document.getElementById("listSpeakers").getElementsByTagName('tbody')[0];
+        var new_tbody = document.createElement('tbody');
+        tableRef.parentNode.replaceChild(new_tbody, tableRef)
+        listUsers.forEach(user => {
+            let newRow = new_tbody.insertRow(-1);
+            let newCellId = newRow.insertCell(0);
+            let newCellName = newRow.insertCell(1);
+            let newCellPassword = newRow.insertCell(2);
+
+
+            let newText = document.createTextNode(user.id);
+            newCellId.appendChild(newText);
+            newText = document.createTextNode(user.name);
+            newCellName.appendChild(newText);
+            newText = document.createTextNode(user.password);
+            newCellPassword.appendChild(newText);
+        })
+
+    }
+
+
+
+    function addUser() {
+        let nameRef = document.getElementById("inputName");
+        let passwordRef = document.getElementById("inputPassword");
+
+
+        var identify = "/api/User/Add"
+        var request = new XMLHttpRequest();
+
+        listUsers.push({ id: listUsers.length + 1, name: nameRef.value, password: passwordRef.value });
+        showListUsers();
+        // POST
+
+        request.open("POST", identify, true);
+        request.setRequestHeader('id', listUsers.length+1);
+        request.setRequestHeader('name', nameRef.value);
+        request.setRequestHeader('password', passwordRef.value);
+
+        request.onload = function () {
+            var json = JSON.parse(request.responseText);
+            console.log("request respuesta", json);
+            $("#addUserModel").modal("hide");
+        };
+
+        request.send();
+        
+
+    }
+</script>

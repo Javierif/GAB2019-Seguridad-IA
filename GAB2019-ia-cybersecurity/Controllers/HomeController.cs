@@ -12,23 +12,39 @@ namespace GAB2019_ia_cybersecurity.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("~/Views/Home/Login/FirstLogin.cshtml");
         }
 
-        public IActionResult About()
+        public IActionResult Terminators()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            return View("~/Views/Home/Login/Terminators.cshtml");
         }
-
-        public IActionResult Contact()
+        public IActionResult Finish()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View("~/Views/Home/Login/Finish.cshtml");
+        }
+
+        public IActionResult SecondCake()
+        {
+            return View("~/Views/Home/Login/SecondCake.cshtml");
+        }
+        public IActionResult ThirdLogin()
+        {
+            return View("~/Views/Home/Login/ThirdLogin.cshtml");
+        }
+
+
+        public IActionResult SecondLogin()
+        {
+            return View("~/Views/Home/Login/SecondLogin.cshtml");
+        }
+
+        public IActionResult Dashboard()
+        {
+            ViewData["Message"] = "Your dashboard page.";
 
             return View();
         }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

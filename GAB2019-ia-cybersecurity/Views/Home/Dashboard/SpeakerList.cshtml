@@ -1,0 +1,66 @@
+﻿<div class="row col-md-12 custyle">
+    <table class="table table-striped custab" id="listUsers">
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Enroll</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    function showListSpeakers() {
+        let tableRef = document.getElementById("listUsers").getElementsByTagName('tbody')[0];
+        var new_tbody = document.createElement('tbody');
+        tableRef.parentNode.replaceChild(new_tbody, tableRef)
+        listUsers.forEach(user => {
+            let newRow = new_tbody.insertRow(-1);
+            let newCellId = newRow.insertCell(0);
+            let newCellName = newRow.insertCell(1);
+            let newCellEnroll = newRow.insertCell(2);
+            let newCellAction = newRow.insertCell(3);
+
+            let newText = document.createTextNode(user.id);
+            newCellId.appendChild(newText);
+            newText = document.createTextNode(user.name);
+            newCellName.appendChild(newText);
+
+            var check1 = `<input type='checkbox' class='form-check-input' ${user.enroll && user.enroll > 0 ? "checked" : ""} disabled>`;
+            var check2 = `<input type='checkbox' class='form-check-input' ${user.enroll && user.enroll > 1 ? "checked" : ""} disabled>`;
+            var check3 = `<input type='checkbox' class='form-check-input' ${user.enroll && user.enroll > 2 ? "checked" : ""} disabled>`;
+            newCellEnroll.insertAdjacentHTML('beforeend', check1 + check2 + check3);
+
+
+            var record = `<button type="button" class="btn btn-primary" id="record_${user.id}">Record</button><button type="button" id="stop_${user.id}" class="btn btn-danger">Stop</button>`
+            newCellAction.insertAdjacentHTML('beforeend', record);
+            newCellAction.style = "text-align:center;"
+
+            recordButton = document.getElementById(`record_${user.id}`);
+            stopButton = document.getElementById(`stop_${user.id}`);
+            activateRecordClient(recordButton, stopButton, callRecognize, [user.id,user.name])
+        })
+    }
+
+    function callRecognize(blob,props) {
+        var identify = "/api/Speaker/CreateEnrollment"
+        var request = new XMLHttpRequest();
+        // POST
+        request.open("POST", identify, true);
+
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.setRequestHeader('id', props[0]);
+        request.setRequestHeader('name', props[1]);
+
+
+        request.onload = function () {
+            var json = JSON.parse(request.responseText);
+            console.log("request respuesta", json);
+        };
+        request.send(blob);
+    }
+
+</script>

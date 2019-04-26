@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<link rel="stylesheet" href="~/css/speaker.css" />
+
+<div class="main">
+    <div class="container">
+        <div class="col-sm-12 col-md-12 well" id="content">
+            <div class='console-container'><span id='firstLoginTerminal'></span><div class='console-underscore' id='console'>&#95;</div></div>
+        </div>
+            <center>
+            <div class="middle">
+                <div id="login">
+                    <form action="javascript:void(0);" method="get">
+                        <fieldset class="clearfix">
+                            <p><input type="text" placeholder="Nombre" id="inputName" class="form-control" /> </p>
+                            <p><input type="password" placeholder="Password" id="inputPassword" class="form-control" /> </p>
+                            <p><button class="btn btn-primary" onclick="loginFirst()">Login</button></p>
+                        </fieldset>
+                        <div class="clearfix"></div>
+                    </form>
+                    <div class="clearfix"></div>
+                </div> <!-- end login -->
+                <div class="card">
+                    <div class="card-block" id="terminal">
+                    </div>
+                </div>
+
+            </div>
+        </center>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    consoleText(['Inicia sesión para activar a los terminators'], 'firstLoginTerminal'); 
+    var terminal = document.getElementById('terminal');
+    let nameRef = document.getElementById("inputName");
+    let passwordRef = document.getElementById("inputPassword");
+    var user;
+    function loginFirst() {
+        var identify = "/api/Login/firstlogin"
+        var request = new XMLHttpRequest();
+        
+        request.open("POST", identify, true);
+        request.setRequestHeader('name', nameRef.value);
+        request.setRequestHeader('password', passwordRef.value);
+
+        request.onload = function () {
+            console.log("RESPONSE ", request)
+            var json = JSON.parse(request.responseText);
+            console.log("request respuesta", json);
+            if (json.error) {
+
+                terminal.innerHTML = "Ha surgido un error al iniciar sesión, comprueba tu usuario y contraseña";
+            } else {
+                window.location.href = '/home/terminators';
+                user = json
+            }
+
+        };
+
+        request.send();
+    }
+</script>

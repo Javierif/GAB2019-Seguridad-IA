@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<link rel="stylesheet" href="~/css/speaker.css" />
+
+<div class="main">
+    <div class="container">
+        <div class="col-sm-12 col-md-12 well" id="contentTerminator">
+            <div class='console-container'><span id='terminatorsTerminal'></span><div class='console-underscore' id='console'>&#95;</div></div>
+
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="middle">
+                <img src="~/images/smile.gif" id="smile" alt="LOGO" />
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="middle">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/T_PbVMD8ttM?controls=0&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <button class="btn btn-primary btn-lg" onclick="continuar()">Continuar</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<script>
+    consoleText(['Ups... Solo quedaban estos en el trastero'], 'terminatorsTerminal'); 
+    function continuar() {
+        window.location.href = '/home/secondlogin';
+    }
+</script>

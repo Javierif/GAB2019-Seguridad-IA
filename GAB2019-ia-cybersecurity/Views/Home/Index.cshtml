@@ -2,6 +2,85 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script>
+    var key = 'a377583555264419ba170fd654381f41';
+    function getGUID() {
+        var rootEndpoint =
+            'https://westus.api.cognitive.microsoft.com/spid/v1.0';
+
+        // the Verification endpoint to create a new profile  
+        var create =
+            rootEndpoint + '/verificationProfiles';
+
+        var request = new XMLHttpRequest();
+        request.open("POST", create, true);
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        // your cognitive services key goes in this header:
+        request.setRequestHeader('Ocp-Apim-Subscription-Key', key);
+
+        request.onload = function () {
+            var json = JSON.parse(request.responseText);
+            var profileId = json.verificationProfileId;
+        };
+
+        request.send(JSON.stringify({ 'locale': 'en-us' }));
+    }
+    function getPhrases() {
+        // the cognitive services endpoint
+        var rootEndpoint =
+            'https://westus.api.cognitive.microsoft.com/spid/v1.0';
+
+        // the endpoint to list valid phrases
+        var phrases =
+            rootEndpoint + '/verificationPhrases?locale=en-US';
+
+        var request = new XMLHttpRequest();
+        // This one's a GET not a POST; we aren't creating anything here
+        request.open("GET", phrases, true);
+        request.setRequestHeader('Content-Type', 'multipart/form-data');
+
+        // your key goes here:
+        request.setRequestHeader('Ocp-Apim-Subscription-Key', key);
+
+        request.send();
+    }
+
+    function enrollProfile() {
+        // the cognitive services endpoint
+        var rootEndpoint =
+            'https://westus.api.cognitive.microsoft.com/spid/v1.0';
+
+        // the endpoint to associate a profile with a voiceprint
+        var enroll =
+            rootEndpoint
+            + '/verificationProfiles/'
+            + profileId // NOW we can finally use the profile ID from the first request!
+            + '/enroll';
+
+        var request = new XMLHttpRequest();
+        // POST
+        request.open("POST", enroll, true);
+        request.setRequestHeader('Content-Type', 'multipart/form-data');
+        // your key goes here
+        request.setRequestHeader('Ocp-Apim-Subscription-Key', key);
+
+        request.onload = function () {
+            var json = JSON.parse(request.responseText);
+
+            // there need to be 3 successful enrollments before it's ready
+            if (json.remainingEnrollments == 0) {
+                console.log("Verification should be enabled!")
+            }
+        };
+
+        request.send(blob);
+    }
+
+    getGUID();
+    getPhrases();
+</script>
+
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
